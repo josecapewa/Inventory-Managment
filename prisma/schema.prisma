@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Categories {
+  id   String @id @default(uuid())
+  name String @unique
+
+  products Products[]
+
+  @@map("categories")
+}
+
+model Media {
+  id       String  @id @default(uuid())
+  fileName String?
+  fileType String?
+
+  products Products[]
+
+  @@map("media")
+}
+
+model Products {
+  id         String   @id @default(uuid())
+  name       String?  @unique
+  quantity   String   @default("0")
+  buyPrice   Float    @default(0)
+  sellPrice  Float    @default(0)
+  date       DateTime @default(now())
+  categoryId String
+  mediaId    String
+
+  categories Categories @relation(fields: [categoryId], references: [id])
+  media      Media      @relation(fields: [mediaId], references: [id])
+
+  sales Sales[]
+
+  @@map("products")
+}
+
+model Sales {
+  id String @id @default(uuid())
+  qty Int
+  price Float
+  date DateTime @default(now())
+  productId String
+
+  products Products @relation(fields: [productId], references: [id])
+
+  @@map("sales")
+}
+
+
+model UserGroup {
+  id          String @id @default(uuid())
+  groupName   String
+  groupLevel  Int    @unique
+  groupStatus Int
+
+  user User[]
+
+  @@map("user_group")
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  username String @unique
+  password String
+  status Int
+  lastLogin DateTime
+  userLevel Int
+
+  userGroup UserGroup @relation(fields: [userLevel], references: [groupLevel])
+
+  @@map("user")
+}
