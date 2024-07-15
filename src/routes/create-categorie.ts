@@ -4,7 +4,7 @@ import { prisma } from "../modules/lib/prisma";
 export async function createCategorie(app: FastifyInstance){
     app.post(
         "/categorie/create",
-        async (request: FastifyRequest<{ Body: { name: string } }>) => {
+        async (request: FastifyRequest<{ Body: Categorie }>) => {
             const { name } = request.body;
 
             const categorie = await prisma.categories.create({

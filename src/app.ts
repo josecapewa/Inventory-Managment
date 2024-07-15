@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import dotenv from 'dotenv';
-import { createCategorie } from './routes/create-categorie';
+import  routes from './routes';
 
 dotenv.config();
 
@@ -8,7 +8,7 @@ const app = fastify({
     logger: true
 });
 
-app.register(createCategorie);
+app.register(routes);
 
 app.get('/', async (request, reply) => {
     return "hello world ";
