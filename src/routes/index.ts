@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
-import { createCategorie } from "./create-categorie";
-import { createMedia } from "./create-media";
-import { createProduct } from "./create-product";
+import { createCategorie } from "./categories/categories.routes";
+import { createMedia } from "./media/media.routes";
+import { createProduct } from "./products/products.routes";
 
 export default async function routes(app: FastifyInstance){
     await createCategorie(app),

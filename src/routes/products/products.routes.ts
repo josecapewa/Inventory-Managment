@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyRequest } from "fastify";
-import { prisma } from "../modules/lib/prisma";
+import { prisma } from "../../modules/lib/prisma";
 
 
 export async function createProduct(fastify: FastifyInstance) {
