@@ -5,7 +5,7 @@ import { prisma } from "../../modules/lib/prisma";
 export async function createProduct(fastify: FastifyInstance) {
     fastify.post(
         '/product/create'
-        , async (request: FastifyRequest<{ Body: AddProduct }>) => {
+        , async (request: FastifyRequest<{ Body: Product }>) => {
             const { 
                 name,
                 categoryId,
@@ -17,6 +17,22 @@ export async function createProduct(fastify: FastifyInstance) {
                     name,
                     categoryId,
                     mediaId
+                }
+            });
+
+            return product;
+
+        }
+    )
+
+    fastify.get(
+        '/product/:id'
+        , async (request: FastifyRequest<{ Params: { id: string } }>) => {
+            const { id } = request.params;
+
+            const product = await prisma.products.findUnique({
+                where: {
+                    id: id
                 }
             });
 

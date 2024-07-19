@@ -7,7 +7,7 @@ interface Media {
     fileType: string
 }
 
-interface AddProduct {
+interface Product {
     name: string
     categoryId: number
     mediaId: string
