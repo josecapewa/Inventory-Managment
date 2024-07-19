@@ -40,4 +40,24 @@ export async function createProduct(fastify: FastifyInstance) {
 
         }
     )
+    fastify.put(
+        "/product/update/:id",
+        async (request: FastifyRequest<{ Params: { id: string }, Body: Product }>) => {
+            const { id } = request.params;
+            const { name, categoryId, mediaId } = request.body;
+
+            const product = await prisma.products.update({
+                where: {
+                    id: id
+                },
+                data: {
+                    name,
+                    categoryId,
+                    mediaId
+                }
+            });
+
+            return product;
+        }
+    )
 }
