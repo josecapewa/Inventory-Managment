@@ -1,33 +1,12 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
-import { prisma } from "../../modules/lib/prisma";
+import { prisma } from "../modules/lib/prisma";
+import { createProductHandler } from "../controllers/ProductsController";
 
 
-export async function createProduct(fastify: FastifyInstance) {
+export default async function (fastify: FastifyInstance) {
     fastify.post(
         '/product/create'
-        , async (request: FastifyRequest<{ Body: Product }>, response: FastifyReply) => {
-            try{
-                const { 
-                    name,
-                    categoryId,
-                    mediaId
-                } = request.body;
-    
-                const product = await prisma.products.create({
-                    data:{
-                        name,
-                        categoryId,
-                        mediaId
-                    }
-                });
-    
-                return response.code(201).send(product);
-            } catch (e) {
-                console.log(e)
-                return response.code(500).send({ message: "Internal Server Error" });
-            }
-
-        }
+        , createProductHandler
     )
 
     fastify.get(

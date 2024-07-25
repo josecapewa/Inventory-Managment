@@ -1,10 +1,10 @@
 import { FastifyInstance } from "fastify";
-import { createCategorie } from "./categories/categories.routes";
-import { createMedia } from "./media/media.routes";
-import { createProduct } from "./products/products.routes";
+import mediaRoutes from "./media.routes";
+import productRoutes from "./products.routes";
+import categoryRoutes from "./categories.routes";
 
 export default async function routes(app: FastifyInstance){
-    await createCategorie(app),
-    await createMedia(app),
-    await createProduct(app)
+    await mediaRoutes(app),
+    await productRoutes(app),
+    await categoryRoutes(app)
 }
